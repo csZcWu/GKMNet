@@ -68,9 +68,5 @@ if __name__ == '__main__':
     lpips_ = np.mean(lpips_list)
     print('lpips:', lpips_)
     print('avg_time:', total_time / 75.)
-    # if psnr > max_psnr:
-    #     max_psnr = psnr
-    #     e = i
-    # print(e, max_psnr)
     with open('{}/psnr.txt'.format(log_dir), 'a') as log_fp:
         log_fp.write('epoch {} : psnr {}\n'.format(last_epoch, psnr))
