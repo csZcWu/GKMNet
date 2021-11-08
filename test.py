@@ -27,7 +27,7 @@ if __name__ == '__main__':
     set_requires_grad(net, False)
     max_psnr = 0
     e = 0
-    last_epoch = load_model(net, 'checkpoints', epoch=2818)
+    last_epoch = load_model(net, 'checkpoints', epoch=2819)
 
     log_dir = 'test/{}'.format('DPD')
     os.system('mkdir -p {}'.format(log_dir))
