@@ -26,29 +26,18 @@ def worker_init_fn_seed(worker_id):
 def compute_loss(db256, db128, db64, batch, epoch):
     assert db256.shape[0] == batch['label256'].shape[0]
     global le
-    if 2000 <= epoch < 2500 or 3000 <= epoch < 3500 or 4000 <= epoch < 4500:
+    temp = (epoch % 1000) % 200
+    if 0 <= temp < 100 and epoch >= 1000:
         le = 100
         print('ssim', end='')
         '''use ssim loss'''
         loss = 0
         loss += mse(db256, batch['label256'])
         psnr = 10 * torch.log(MAX_DIFF ** 2 / loss) / log10
-        # loss += mse(db128, batch['label128'])
-        # loss += mse(db64, batch['label64'])
         loss = 0
         loss += 1 - torch.mean(ssim(db256, batch['label256'], data_range=1, size_average=False))
         loss += 1 - torch.mean(ssim(db128, batch['label128'], data_range=1, size_average=False))
         loss += 1 - torch.mean(ssim(db64, batch['label64'], data_range=1, size_average=False))
-    # else:
-    #     print('mse', end='')
-    #     '''use mse loss'''
-    #     loss = 0
-    #     loss += mse(db256, batch['label256'])
-    #     psnr = 10 * torch.log(MAX_DIFF ** 2 / loss) / log10
-    #     loss = loss+1e-6
-    #     loss = loss**0.5
-    #     loss += (mse(db128, batch['label128'])+1e-6)**0.5
-    #     loss += (mse(db64, batch['label64'])+1e-6)**0.5
 
     else:
         le = 1
@@ -73,13 +62,10 @@ def backward(loss, optimizer):
 
 
 def set_learning_rate(optimizer, epoch):
-    # decreasing learning rate
-    # if epoch >= 1400:
-    #     optimizer.param_groups[0]['lr'] = config.train['learning_rate'] * 0.3 ** (epoch // 500)
-    # # fixed learning rate
-    # else:
-    #     optimizer.param_groups[0]['lr'] = config.train['learning_rate']
-    optimizer.param_groups[0]['lr'] = config.train['learning_rate']*0.1
+    if epoch < 2000:
+        optimizer.param_groups[0]['lr'] = config.train['learning_rate']
+    else:
+        optimizer.param_groups[0]['lr'] = config.train['learning_rate'] * 0.1
 
 
 if __name__ == "__main__":
