@@ -62,7 +62,7 @@ def backward(loss, optimizer):
 
 
 def set_learning_rate(optimizer, epoch):
-    if epoch < 2000:
+    if epoch < 3000:
         optimizer.param_groups[0]['lr'] = config.train['learning_rate']
     else:
         optimizer.param_groups[0]['lr'] = config.train['learning_rate'] * 0.1
