@@ -27,7 +27,7 @@ if __name__ == '__main__':
     set_requires_grad(net, False)
     max_psnr = 0
     e = 0
-    last_epoch = load_model(net, config.train['resume'], epoch=2819)
+    last_epoch = load_model(net, config.train['resume'], epoch=3687)
 
     log_dir = 'test/{}'.format('DPD')
     os.system('mkdir -p {}'.format(log_dir))
@@ -68,5 +68,9 @@ if __name__ == '__main__':
     lpips_ = np.mean(lpips_list)
     print('lpips:', lpips_)
     print('avg_time:', total_time / 75.)
+    # if psnr > max_psnr:
+    #     max_psnr = psnr
+    #     e = i
+    # print(e, max_psnr)
     with open('{}/psnr.txt'.format(log_dir), 'a') as log_fp:
         log_fp.write('epoch {} : psnr {}\n'.format(last_epoch, psnr))
