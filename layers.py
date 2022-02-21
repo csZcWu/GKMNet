@@ -291,4 +291,4 @@ class MultiplyLayer(nn.Module):
 
 
 if __name__ == '__main__':
-    ml = MultiplyLayer()
+    ml = MultiplyLayer().cuda()
