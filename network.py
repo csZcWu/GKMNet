@@ -59,3 +59,4 @@ class GKMNet(nn.Module):
         '''scale 3'''
         db256, _, _ = self.forward_step(input_blur_256, F.upsample(db128, scale_factor=2, mode='bilinear'), (h, c))
         return db256, db128, db64, time()
+    
