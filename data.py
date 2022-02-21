@@ -32,6 +32,18 @@ class Dataset(torch.utils.data.Dataset):
 
         blurry_img = Image.open(blurry_img_name)
         clear_img = Image.open(clear_img_name)
+        #  flip
+        flip = np.random.randint(0, 2)
+        if flip:
+            flip = np.random.randint(0, 2)
+            blurry_img = blurry_img.transpose(flip)
+            clear_img = clear_img.transpose(flip)
+        #  rotate
+        rotate = np.random.randint(0, 2)
+        if rotate:
+            rotate = np.random.randint(2, 5)
+            blurry_img = blurry_img.transpose(rotate)
+            clear_img = clear_img.transpose(rotate)
         assert blurry_img.size == clear_img.size
         crop_left = int(np.floor(np.random.uniform(0, blurry_img.size[0] - self.crop_size[0] + 1)))
         crop_top = int(np.floor(np.random.uniform(0, blurry_img.size[1] - self.crop_size[1] + 1)))
