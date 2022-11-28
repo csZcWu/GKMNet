@@ -27,7 +27,7 @@ if __name__ == '__main__':
     set_requires_grad(net, False)
     max_psnr = 0
     e = 0
-    last_epoch = load_model(net, config.train['resume'], epoch=3687)
+    last_epoch = load_model(net, config.train['resume'], epoch=config.train['resume_epoch'])
 
     log_dir = 'test/{}'.format('DPD')
     os.system('mkdir -p {}'.format(log_dir))
